@@ -45,12 +45,9 @@ module CanCan
       parent = nil
       [@options[:nested]].flatten.compact.each do |name|
         id = @params["#{name}_id".to_sym]
-        if id
-          parent = ControllerResource.new(@controller, name, parent)
-          parent.find(id)
-        else
-          parent = nil
-        end
+        next unless id
+        parent = ControllerResource.new(@controller, name, parent)
+        parent.find(id)
       end
       parent
     end
